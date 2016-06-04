@@ -1,0 +1,12 @@
+extensions:
+    arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/twig)
+
+arachne.twig:
+    options:
+        debug: true
+    dumpOptions:
+        truncate: 8
+    paths:
+        - %appDir%/../templates/default
+        namespace:
+            - %appDir%/../templates/namespace

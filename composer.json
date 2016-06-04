@@ -1,0 +1,38 @@
+{
+    "name": "arachne/twig",
+    "description": "Basic integration of Twig to Nette Framework. Used by arachne/forms.",
+    "type": "library",
+    "keywords": [ "nette", "arachne", "twig" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jáchym Toušek",
+            "homepage": "http://enumag.cz",
+            "email": "enumag@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^5.4.0|^7.0.0",
+        "nette/di": "^2.3.0",
+        "twig/twig": "^1.0.0"
+    },
+    "require-dev": {
+        "php": "^5.5.0|^7.0.0",
+        "arachne/bootstrap": "^0.2.1",
+        "codeception/codeception": "~2.2.0",
+        "yep/tracy-twig-extensions": "^1.0.0"
+    },
+	"suggest": {
+		"yep/tracy-twig-extensions": "Enables Tracy dumps in Twig templates."
+	},
+    "autoload": {
+        "psr-4": {
+            "Arachne\\Twig\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Integration\\": "tests/integration/src"
+        }
+    }
+}
