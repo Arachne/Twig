@@ -1,5 +1,5 @@
 extensions:
-    arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/twig)
+    arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig)
 
 arachne.twig:
     options:
