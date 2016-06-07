@@ -4,6 +4,7 @@ namespace Tests\Integration;
 
 use Arachne\Bootstrap\Configurator;
 use Codeception\Test\Unit;
+use Tracy\Dumper;
 use Twig_Environment;
 
 /**
@@ -18,6 +19,9 @@ class TwigExtensionTest extends Unit
         /* @var $twig Twig_Environment */
         $twig = $container->getByType(Twig_Environment::class);
         $this->assertInstanceOf(Twig_Environment::class, $twig);
+
+        // Fix dump result comparison on linux.
+        Dumper::$terminalColors = null;
 
         $this->assertSame('"value" (5)', trim($twig->render('index.twig', [
             'foo' => 'value',
