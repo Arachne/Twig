@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Arachne
  *
  * Copyright (c) Jáchym Toušek (enumag@gmail.com)
@@ -46,7 +46,7 @@ class TwigExtension extends CompilerExtension
 
     /**
      * @param string[] $paths
-     * @param string $namespace
+     * @param string   $namespace
      */
     public function addPaths(array $paths, $namespace = null)
     {
@@ -116,13 +116,13 @@ class TwigExtension extends CompilerExtension
         $builder->getDefinition($this->prefix('loader'))
             ->setArguments([
                 'loaders' => array_map(function ($service) {
-                    return '@' . $service;
+                    return '@'.$service;
                 }, array_keys($builder->findByTag(self::TAG_LOADER))),
             ]);
 
         $environment = $builder->getDefinition($this->prefix('environment'));
         foreach ($builder->findByTag(self::TAG_EXTENSION) as $service => $attributes) {
-            $environment->addSetup('?->addExtension(?)', ['@self', '@' . $service]);
+            $environment->addSetup('?->addExtension(?)', ['@self', '@'.$service]);
         }
     }
 }

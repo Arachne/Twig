@@ -36,7 +36,8 @@ class TwigExtensionTest extends Unit
     {
         $config = new Configurator();
         $config->setTempDirectory(TEMP_DIR);
-        $config->addConfig(__DIR__ . '/../config/' . $file);
+        $config->addConfig(__DIR__.'/../config/'.$file);
+
         return $config->createContainer();
     }
 }
