@@ -22,9 +22,9 @@
         "codeception/codeception": "~2.2.0",
         "yep/tracy-twig-extensions": "^1.0.0"
     },
-	"suggest": {
-		"yep/tracy-twig-extensions": "Enables Tracy dumps in Twig templates."
-	},
+    "suggest": {
+        "yep/tracy-twig-extensions": "Enables Tracy dumps in Twig templates."
+    },
     "autoload": {
         "psr-4": {
             "Arachne\\Twig\\": "src"
