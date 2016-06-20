@@ -7,6 +7,6 @@ arachne.twig:
     dumpOptions:
         truncate: 8
     paths:
-        - %appDir%/../templates/default
+        - %appDir%/templates/default
         namespace:
-            - %appDir%/../templates/namespace
+            - %appDir%/templates/namespace
