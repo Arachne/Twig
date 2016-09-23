@@ -77,9 +77,11 @@ class TwigExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('environment'))
             ->setClass('Twig_Environment')
-            ->setArguments([
-                'options' => $this->config['options'],
-            ]);
+            ->setArguments(
+                [
+                    'options' => $this->config['options'],
+                ]
+            );
 
         $builder->addDefinition($this->prefix('loader'))
             ->setClass('Twig_Loader_Chain');
@@ -87,9 +89,11 @@ class TwigExtension extends CompilerExtension
         if (class_exists('Yep\TracyTwigExtensions\DumpExtension')) {
             $builder->addDefinition($this->prefix('extension.tracy.dump'))
                 ->setClass('Yep\TracyTwigExtensions\DumpExtension')
-                ->setArguments([
-                    'options' => $this->config['dumpOptions'],
-                ])
+                ->setArguments(
+                    [
+                        'options' => $this->config['dumpOptions'],
+                    ]
+                )
                 ->addTag(self::TAG_EXTENSION)
                 ->setAutowired(false);
         }
@@ -97,9 +101,11 @@ class TwigExtension extends CompilerExtension
         if (class_exists('Yep\TracyTwigExtensions\BarDumpExtension')) {
             $builder->addDefinition($this->prefix('extension.tracy.barDump'))
                 ->setClass('Yep\TracyTwigExtensions\BarDumpExtension')
-                ->setArguments([
-                    'options' => $this->config['dumpOptions'],
-                ])
+                ->setArguments(
+                    [
+                        'options' => $this->config['dumpOptions'],
+                    ]
+                )
                 ->addTag(self::TAG_EXTENSION)
                 ->setAutowired(false);
         }
@@ -114,11 +120,16 @@ class TwigExtension extends CompilerExtension
         }
 
         $builder->getDefinition($this->prefix('loader'))
-            ->setArguments([
-                'loaders' => array_map(function ($service) {
-                    return '@'.$service;
-                }, array_keys($builder->findByTag(self::TAG_LOADER))),
-            ]);
+            ->setArguments(
+                [
+                    'loaders' => array_map(
+                        function ($service) {
+                            return '@'.$service;
+                        },
+                        array_keys($builder->findByTag(self::TAG_LOADER))
+                    ),
+                ]
+            );
 
         $environment = $builder->getDefinition($this->prefix('environment'));
         foreach ($builder->findByTag(self::TAG_EXTENSION) as $service => $attributes) {
