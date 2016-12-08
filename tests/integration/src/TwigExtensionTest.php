@@ -3,6 +3,7 @@
 namespace Tests\Integration;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Tracy\Dumper;
 use Twig_Environment;
 
@@ -27,5 +28,7 @@ class TwigExtensionTest extends Unit
         $this->assertSame('"long_val ... " (10)', trim($twig->render('@namespace/index.twig', [
             'bar' => 'long_value',
         ])));
+
+        $this->assertInstanceOf(DateTime::class, $twig->getRuntime('DateTime'));
     }
 }

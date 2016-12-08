@@ -1,4 +1,5 @@
 extensions:
+    arachne.service_collections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
     arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig)
 
 arachne.twig:
@@ -10,3 +11,9 @@ arachne.twig:
         - %appDir%/templates/default
         namespace:
             - %appDir%/templates/namespace
+
+services:
+    datetime:
+        class: DateTime
+        tags:
+            arachne.twig.runtime: DateTime

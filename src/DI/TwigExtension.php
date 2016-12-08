@@ -10,7 +10,9 @@
 
 namespace Arachne\Twig\DI;
 
+use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
 use Nette\DI\CompilerExtension;
+use Nette\Utils\AssertionException;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -26,6 +28,11 @@ class TwigExtension extends CompilerExtension
      * Twig loaders with this tag are added to the Twig_Loader_Chain service.
      */
     const TAG_LOADER = 'arachne.twig.loader';
+
+    /**
+     * Twig runtimes with this tag are registered to the Twig_Environment service.
+     */
+    const TAG_RUNTIME = 'arachne.twig.runtime';
 
     /**
      * @var array
@@ -73,7 +80,24 @@ class TwigExtension extends CompilerExtension
     public function loadConfiguration()
     {
         $this->validateConfig($this->defaults);
+
+        /* @var $serviceCollectionsExtension ServiceCollectionsExtension */
+        $serviceCollectionsExtension = $this->getExtension('Arachne\ServiceCollections\DI\ServiceCollectionsExtension');
+
+        $runtimeResolver = $serviceCollectionsExtension->getCollection(
+            ServiceCollectionsExtension::TYPE_RESOLVER,
+            self::TAG_RUNTIME
+        );
+
         $builder = $this->getContainerBuilder();
+
+        $builder->addDefinition($this->prefix('runtimeLoader'))
+            ->setClass('Arachne\Twig\RuntimeLoader')
+            ->setArguments(
+                [
+                    'resolver' => '@'.$runtimeResolver,
+                ]
+            );
 
         $builder->addDefinition($this->prefix('environment'))
             ->setClass('Twig_Environment')
@@ -81,7 +105,8 @@ class TwigExtension extends CompilerExtension
                 [
                     'options' => $this->config['options'],
                 ]
-            );
+            )
+            ->addSetup('addRuntimeLoader', [$this->prefix('@runtimeLoader')]);
 
         $builder->addDefinition($this->prefix('loader'))
             ->setClass('Twig_Loader_Chain');
@@ -133,7 +158,25 @@ class TwigExtension extends CompilerExtension
 
         $environment = $builder->getDefinition($this->prefix('environment'));
         foreach ($builder->findByTag(self::TAG_EXTENSION) as $service => $attributes) {
-            $environment->addSetup('?->addExtension(?)', ['@self', '@'.$service]);
+            $environment->addSetup('addExtension', ['@'.$service]);
         }
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return CompilerExtension
+     */
+    private function getExtension($class)
+    {
+        $extensions = $this->compiler->getExtensions($class);
+
+        if (!$extensions) {
+            throw new AssertionException(
+                sprintf('Extension "%s" requires "%s" to be installed.', get_class($this), $class)
+            );
+        }
+
+        return reset($extensions);
     }
 }
