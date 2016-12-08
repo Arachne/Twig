@@ -18,7 +18,7 @@ use Nette\DI\CompilerExtension;
 class TwigExtension extends CompilerExtension
 {
     /**
-     * Twig Extensions with this tag are registered to the Twig_Environment service.
+     * Twig extensions with this tag are registered to the Twig_Environment service.
      */
     const TAG_EXTENSION = 'arachne.twig.extension';
 
