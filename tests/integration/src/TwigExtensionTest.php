@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use Arachne\Codeception\Module\NetteDIModule;
 use Codeception\Test\Unit;
 use DateTime;
 use Tracy\Dumper;
@@ -12,6 +13,11 @@ use Twig_Environment;
  */
 class TwigExtensionTest extends Unit
 {
+    /**
+     * @var NetteDIModule
+     */
+    protected $tester;
+
     public function testConfiguration()
     {
         /* @var $twig Twig_Environment */
@@ -19,15 +25,11 @@ class TwigExtensionTest extends Unit
         $this->assertInstanceOf(Twig_Environment::class, $twig);
 
         // Fix dump result comparison on linux.
-        Dumper::$terminalColors = null;
+        Dumper::$terminalColors = [];
 
-        $this->assertSame('"value" (5)', trim($twig->render('index.twig', [
-            'foo' => 'value',
-        ])));
+        $this->assertSame('"value" (5)', trim($twig->render('index.twig', ['foo' => 'value'])));
 
-        $this->assertSame('"long_val ... " (10)', trim($twig->render('@namespace/index.twig', [
-            'bar' => 'long_value',
-        ])));
+        $this->assertSame('"long_val ... " (10)', trim($twig->render('@namespace/index.twig', ['bar' => 'long_value'])));
 
         $this->assertInstanceOf(DateTime::class, $twig->getRuntime('DateTime'));
     }
