@@ -3,8 +3,14 @@
 namespace Arachne\Twig\DI;
 
 use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
+use Arachne\Twig\RuntimeLoader;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\AssertionException;
+use Twig_Environment;
+use Twig_Loader_Chain;
+use Twig_Loader_Filesystem;
+use Yep\TracyTwigExtensions\BarDumpExtension;
+use Yep\TracyTwigExtensions\DumpExtension;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -54,7 +60,7 @@ class TwigExtension extends CompilerExtension
 
         if (!$builder->hasDefinition($serviceName)) {
             $builder->addDefinition($serviceName)
-                ->setClass('Twig_Loader_Filesystem')
+                ->setClass(Twig_Loader_Filesystem::class)
                 ->addTag(self::TAG_LOADER)
                 ->setAutowired(false);
         }
@@ -74,7 +80,7 @@ class TwigExtension extends CompilerExtension
         $this->validateConfig($this->defaults);
 
         /* @var $serviceCollectionsExtension ServiceCollectionsExtension */
-        $serviceCollectionsExtension = $this->getExtension('Arachne\ServiceCollections\DI\ServiceCollectionsExtension');
+        $serviceCollectionsExtension = $this->getExtension(ServiceCollectionsExtension::class);
 
         $runtimeResolver = $serviceCollectionsExtension->getCollection(
             ServiceCollectionsExtension::TYPE_RESOLVER,
@@ -84,7 +90,7 @@ class TwigExtension extends CompilerExtension
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('runtimeLoader'))
-            ->setClass('Arachne\Twig\RuntimeLoader')
+            ->setClass(RuntimeLoader::class)
             ->setArguments(
                 [
                     'resolver' => '@'.$runtimeResolver,
@@ -92,7 +98,7 @@ class TwigExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('environment'))
-            ->setClass('Twig_Environment')
+            ->setClass(Twig_Environment::class)
             ->setArguments(
                 [
                     'options' => $this->config['options'],
@@ -101,11 +107,11 @@ class TwigExtension extends CompilerExtension
             ->addSetup('addRuntimeLoader', [$this->prefix('@runtimeLoader')]);
 
         $builder->addDefinition($this->prefix('loader'))
-            ->setClass('Twig_Loader_Chain');
+            ->setClass(Twig_Loader_Chain::class);
 
-        if (class_exists('Yep\TracyTwigExtensions\DumpExtension')) {
+        if (class_exists(DumpExtension::class)) {
             $builder->addDefinition($this->prefix('extension.tracy.dump'))
-                ->setClass('Yep\TracyTwigExtensions\DumpExtension')
+                ->setClass(DumpExtension::class)
                 ->setArguments(
                     [
                         'options' => $this->config['dumpOptions'],
@@ -115,9 +121,9 @@ class TwigExtension extends CompilerExtension
                 ->setAutowired(false);
         }
 
-        if (class_exists('Yep\TracyTwigExtensions\BarDumpExtension')) {
+        if (class_exists(BarDumpExtension::class)) {
             $builder->addDefinition($this->prefix('extension.tracy.barDump'))
-                ->setClass('Yep\TracyTwigExtensions\BarDumpExtension')
+                ->setClass(BarDumpExtension::class)
                 ->setArguments(
                     [
                         'options' => $this->config['dumpOptions'],
