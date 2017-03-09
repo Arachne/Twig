@@ -12,15 +12,14 @@
         }
     ],
     "require": {
-        "php": "^5.4.0|^7.0.0",
+        "php": "^5.5.0|^7.0.0",
         "arachne/service-collections": "^0.1.0",
         "nette/di": "^2.3.0",
-        "twig/twig": "^1.26.0"
+        "twig/twig": "^1.26.0|^2.0.0"
     },
     "require-dev": {
-        "php": "^5.5.0|^7.0.0",
         "arachne/codeception": "^0.7.3",
-        "codeception/codeception": "~2.2.0",
+        "codeception/codeception": "^2.2.0",
         "yep/tracy-twig-extensions": "^1.0.0"
     },
     "suggest": {
@@ -35,5 +34,19 @@
         "psr-4": {
             "Tests\\Integration\\": "tests/integration/src"
         }
+    },
+    "scripts": {
+        "all": [
+            "@fix",
+            "@analyse",
+            "@test"
+        ],
+        "tools": "sh composer-tools.sh",
+        "fix": "\"vendor-tools/bin/php-cs-fixer\" fix",
+        "analyse": "\"vendor-tools/bin/phpstan\" analyse --no-progress --level=5 --configuration=phpstan.neon src tests",
+        "test": [
+            "\"vendor/bin/codecept\" build",
+            "\"vendor/bin/codecept\" run"
+        ]
     }
 }
