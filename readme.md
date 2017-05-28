@@ -17,5 +17,5 @@ Installation
 The best way to install Arachne/Twig is using [Composer](http://getcomposer.org/).
 
 ```sh
-$ composer require arachne/twig
+composer require arachne/twig
 ```
