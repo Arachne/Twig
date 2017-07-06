@@ -6,9 +6,9 @@ use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
 use Arachne\Twig\RuntimeLoader;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\AssertionException;
-use Twig_Environment;
-use Twig_Loader_Chain;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
 use Yep\TracyTwigExtensions\BarDumpExtension;
 use Yep\TracyTwigExtensions\DumpExtension;
 
@@ -60,7 +60,7 @@ class TwigExtension extends CompilerExtension
 
         if (!$builder->hasDefinition($serviceName)) {
             $builder->addDefinition($serviceName)
-                ->setClass(Twig_Loader_Filesystem::class)
+                ->setClass(FilesystemLoader::class)
                 ->addTag(self::TAG_LOADER)
                 ->setAutowired(false);
         }
@@ -98,7 +98,7 @@ class TwigExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('environment'))
-            ->setClass(Twig_Environment::class)
+            ->setClass(Environment::class)
             ->setArguments(
                 [
                     'options' => $this->config['options'],
@@ -107,7 +107,7 @@ class TwigExtension extends CompilerExtension
             ->addSetup('addRuntimeLoader', [$this->prefix('@runtimeLoader')]);
 
         $builder->addDefinition($this->prefix('loader'))
-            ->setClass(Twig_Loader_Chain::class);
+            ->setClass(ChainLoader::class);
 
         if (class_exists(DumpExtension::class)) {
             $builder->addDefinition($this->prefix('extension.tracy.dump'))
