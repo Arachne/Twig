@@ -4,3 +4,6 @@ includes:
 
 parameters:
     ignoreErrors:
+
+    excludes_analyse:
+        - %rootDir%/../../../tests/_helpers/*
