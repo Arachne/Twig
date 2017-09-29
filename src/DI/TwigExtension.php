@@ -51,9 +51,8 @@ class TwigExtension extends CompilerExtension
 
     /**
      * @param string[] $paths
-     * @param string   $namespace
      */
-    public function addPaths(array $paths, $namespace = null)
+    public function addPaths(array $paths, ?string $namespace = null): void
     {
         $builder = $this->getContainerBuilder();
         $serviceName = $this->prefix('loader.fileSystem');
@@ -75,7 +74,7 @@ class TwigExtension extends CompilerExtension
         }
     }
 
-    public function loadConfiguration()
+    public function loadConfiguration(): void
     {
         $this->validateConfig($this->defaults);
 
@@ -134,7 +133,7 @@ class TwigExtension extends CompilerExtension
         }
     }
 
-    public function beforeCompile()
+    public function beforeCompile(): void
     {
         $builder = $this->getContainerBuilder();
 
@@ -160,12 +159,7 @@ class TwigExtension extends CompilerExtension
         }
     }
 
-    /**
-     * @param string $class
-     *
-     * @return CompilerExtension
-     */
-    private function getExtension($class)
+    private function getExtension(string $class): CompilerExtension
     {
         $extensions = $this->compiler->getExtensions($class);
 

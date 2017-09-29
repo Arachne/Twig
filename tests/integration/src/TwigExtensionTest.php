@@ -18,7 +18,7 @@ class TwigExtensionTest extends Unit
      */
     protected $tester;
 
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         /* @var $twig Environment */
         $twig = $this->tester->grabService(Environment::class);
