@@ -2,12 +2,12 @@
 
 namespace Arachne\Twig;
 
-use Twig_RuntimeLoaderInterface;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
  */
-class RuntimeLoader implements Twig_RuntimeLoaderInterface
+class RuntimeLoader implements RuntimeLoaderInterface
 {
     /**
      * @var callable

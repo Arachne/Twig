@@ -6,7 +6,7 @@ use Arachne\Codeception\Module\NetteDIModule;
 use Codeception\Test\Unit;
 use DateTime;
 use Tracy\Dumper;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -20,9 +20,9 @@ class TwigExtensionTest extends Unit
 
     public function testConfiguration()
     {
-        /* @var $twig Twig_Environment */
-        $twig = $this->tester->grabService(Twig_Environment::class);
-        $this->assertInstanceOf(Twig_Environment::class, $twig);
+        /* @var $twig Environment */
+        $twig = $this->tester->grabService(Environment::class);
+        $this->assertInstanceOf(Environment::class, $twig);
 
         // Fix dump result comparison on linux.
         Dumper::$terminalColors = [];
