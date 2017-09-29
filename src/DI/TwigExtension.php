@@ -60,7 +60,7 @@ class TwigExtension extends CompilerExtension
 
         if (!$builder->hasDefinition($serviceName)) {
             $builder->addDefinition($serviceName)
-                ->setClass(FilesystemLoader::class)
+                ->setType(FilesystemLoader::class)
                 ->addTag(self::TAG_LOADER)
                 ->setAutowired(false);
         }
@@ -90,7 +90,7 @@ class TwigExtension extends CompilerExtension
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('runtimeLoader'))
-            ->setClass(RuntimeLoader::class)
+            ->setType(RuntimeLoader::class)
             ->setArguments(
                 [
                     'resolver' => '@'.$runtimeResolver,
@@ -98,7 +98,7 @@ class TwigExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('environment'))
-            ->setClass(Environment::class)
+            ->setType(Environment::class)
             ->setArguments(
                 [
                     'options' => $this->config['options'],
@@ -107,11 +107,11 @@ class TwigExtension extends CompilerExtension
             ->addSetup('addRuntimeLoader', [$this->prefix('@runtimeLoader')]);
 
         $builder->addDefinition($this->prefix('loader'))
-            ->setClass(ChainLoader::class);
+            ->setType(ChainLoader::class);
 
         if (class_exists(DumpExtension::class)) {
             $builder->addDefinition($this->prefix('extension.tracy.dump'))
-                ->setClass(DumpExtension::class)
+                ->setType(DumpExtension::class)
                 ->setArguments(
                     [
                         'options' => $this->config['dumpOptions'],
@@ -123,7 +123,7 @@ class TwigExtension extends CompilerExtension
 
         if (class_exists(BarDumpExtension::class)) {
             $builder->addDefinition($this->prefix('extension.tracy.barDump'))
-                ->setClass(BarDumpExtension::class)
+                ->setType(BarDumpExtension::class)
                 ->setArguments(
                     [
                         'options' => $this->config['dumpOptions'],
