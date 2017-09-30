@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arachne\Twig\DI;
 
 use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
