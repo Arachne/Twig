@@ -80,7 +80,7 @@ class TwigExtension extends CompilerExtension
     {
         $this->validateConfig($this->defaults);
 
-        /* @var $serviceCollectionsExtension ServiceCollectionsExtension */
+        /** @var ServiceCollectionsExtension $serviceCollectionsExtension */
         $serviceCollectionsExtension = $this->getExtension(ServiceCollectionsExtension::class);
 
         $runtimeResolver = $serviceCollectionsExtension->getCollection(
