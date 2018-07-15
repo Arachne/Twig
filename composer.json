@@ -23,6 +23,7 @@
         "friendsofphp/php-cs-fixer": "^2.8.0",
         "phpstan/phpstan": "^0.10.0",
         "phpstan/phpstan-nette": "^0.10.0",
+        "phpstan/phpstan-strict-rules": "^0.10.0",
         "yep/tracy-twig-extensions": "^1.0.0"
     },
     "suggest": {

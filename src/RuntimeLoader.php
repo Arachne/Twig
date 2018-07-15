@@ -21,6 +21,11 @@ class RuntimeLoader implements RuntimeLoaderInterface
         $this->resolver = $resolver;
     }
 
+    /**
+     * @param string $class
+     *
+     * @return object|null
+     */
     public function load($class)
     {
         return call_user_func($this->resolver, $class);

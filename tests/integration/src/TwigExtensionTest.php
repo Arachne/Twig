@@ -24,15 +24,15 @@ class TwigExtensionTest extends Unit
     {
         /* @var $twig Environment */
         $twig = $this->tester->grabService(Environment::class);
-        $this->assertInstanceOf(Environment::class, $twig);
+        self::assertInstanceOf(Environment::class, $twig);
 
         // Fix dump result comparison on linux.
         Dumper::$terminalColors = [];
 
-        $this->assertSame('"value" (5)', trim($twig->render('index.twig', ['foo' => 'value'])));
+        self::assertSame('"value" (5)', trim($twig->render('index.twig', ['foo' => 'value'])));
 
-        $this->assertSame('"long_val ... " (10)', trim($twig->render('@namespace/index.twig', ['bar' => 'long_value'])));
+        self::assertSame('"long_val ... " (10)', trim($twig->render('@namespace/index.twig', ['bar' => 'long_value'])));
 
-        $this->assertInstanceOf(DateTime::class, $twig->getRuntime('DateTime'));
+        self::assertInstanceOf(DateTime::class, $twig->getRuntime('DateTime'));
     }
 }

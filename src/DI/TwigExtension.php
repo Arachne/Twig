@@ -45,7 +45,7 @@ class TwigExtension extends CompilerExtension
         'dumpOptions' => [],
     ];
 
-    public function __construct($tempDir, $debugMode = false)
+    public function __construct(string $tempDir, bool $debugMode = false)
     {
         $this->defaults['options']['cache'] = $tempDir;
         $this->defaults['options']['debug'] = $debugMode;
@@ -68,7 +68,7 @@ class TwigExtension extends CompilerExtension
 
         $loader = $builder->getDefinition($serviceName);
         foreach ($paths as $path) {
-            if ($namespace) {
+            if ($namespace !== null) {
                 $loader->addSetup('?->addPath(?, ?)', ['@self', $path, $namespace]);
             } else {
                 $loader->addSetup('?->addPath(?)', ['@self', $path]);
@@ -165,7 +165,7 @@ class TwigExtension extends CompilerExtension
     {
         $extensions = $this->compiler->getExtensions($class);
 
-        if (!$extensions) {
+        if ($extensions === []) {
             throw new AssertionException(
                 sprintf('Extension "%s" requires "%s" to be installed.', get_class($this), $class)
             );
