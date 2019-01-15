@@ -18,8 +18,8 @@
         "twig/twig": "^2.0.0"
     },
     "require-dev": {
-        "arachne/codeception": "^0.8.0",
         "codeception/codeception": "^2.4.3",
+        "contributte/codeception": "^1.0.1",
         "friendsofphp/php-cs-fixer": "^2.8.0",
         "phpstan/phpstan": "^0.10.0",
         "phpstan/phpstan-nette": "^0.10.0",
